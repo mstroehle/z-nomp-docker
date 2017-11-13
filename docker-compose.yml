@@ -1,0 +1,28 @@
+version: '3'
+services:
+    znomp:
+        build: .
+        ports: 
+            - "8080:8080"
+        volumes:
+            - ${PWD}/config.json:/root/z-nomp-docker/z-nomp-bitcoin-gold/config.json
+            - ${PWD}/pool_configs:/root/z-nomp-docker/z-nomp-bitcoin-gold/pool_configs
+        links:
+            - redis
+            - bgold
+    redis:
+        image: redis
+    bgold:
+        image: oxide/btcgpu-docker:mainnet
+        volumes:
+            - btcgpu-vol:/root/.bitcoingold/
+        command: bgoldd -printtoconsole -txindex -addnode=213.154.229.126 -addnode=145.239.0.50
+    bgold-testnet:
+        image: oxide/btcgpu-docker:testnet
+        volumes:
+            - btcgpu-testnet-vol:/root/.bitcoingold/
+        command: bgoldd -printtoconsole -testnet -txindex --addnode=eunode.pool.gold --addnode=asianode.pool.gold
+
+volumes:
+    btcgpu-vol:
+    btcgpu-testnet-vol:

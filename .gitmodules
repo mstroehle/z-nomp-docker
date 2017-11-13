@@ -1,0 +1,4 @@
+[submodule "z-nomp-bitcoin-gold"]
+	path = z-nomp-bitcoin-gold
+	url = https://github.com/poolgold/z-nomp-bitcoin-gold.git
+	branch = master
